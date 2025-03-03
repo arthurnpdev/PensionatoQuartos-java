@@ -1,0 +1,47 @@
+package Pensionato;
+import java.util.Scanner;
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		
+		String[] names = new String[10];
+		String[] emails = new String[10];
+		boolean[] busyRooms = new boolean[10];
+		
+		System.out.println("Quantos quartos serão alugados?");
+		int N = scanner.nextInt();
+		scanner.nextLine();
+		
+		for (int i = 0; i < N; i++) {
+			System.out.println("Aluguel #" + (i + 1) + ":");
+			System.out.print("Nome: ");
+			String name = scanner.nextLine();
+			System.out.print("Email: ");
+			String email = scanner.nextLine();
+			System.out.println("Quarto (0 a 9): ");
+			int room = scanner.nextInt();
+			scanner.nextLine();
+			
+			if(busyRooms[room]) {
+				System.out.println("Quarto ocupado. Escolha outro.");
+				i--;
+			}else {
+				names[room] = name;
+				emails[room] = email;
+				busyRooms[room] = true;
+			}
+		}
+		
+		System.out.println("Ocupações atuais:");
+		for (int i = 0; i < 10; i++) {
+			if (busyRooms[i]) {
+				System.out.println("Quarto " + i + ": " + names[i] + ", " + emails[i]);
+			}
+		}
+		
+		scanner.close();
+
+	}
+
+}
