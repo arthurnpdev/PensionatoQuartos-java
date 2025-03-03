@@ -1,13 +1,14 @@
 package Pensionato;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Collections;
 public class Main {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		
-		String[] names = new String[10];
-		String[] emails = new String[10];
-		boolean[] busyRooms = new boolean[10];
+		ArrayList<Student> students = new ArrayList<>();
 		
 		System.out.println("Quantos quartos serão alugados?");
 		int N = scanner.nextInt();
@@ -23,21 +24,27 @@ public class Main {
 			int room = scanner.nextInt();
 			scanner.nextLine();
 			
-			if(busyRooms[room]) {
-				System.out.println("Quarto ocupado. Escolha outro.");
-				i--;
-			}else {
-				names[room] = name;
-				emails[room] = email;
-				busyRooms[room] = true;
+		boolean busyRoom = false;
+		for (Student s : students) {
+			if (s.room == room) {
+				busyRoom = true;
+				break;
 			}
 		}
 		
+		if(busyRoom) {
+			System.out.println("Quarto ocupado. Escolha outro quarto.");
+			i--;
+		}else {
+			students.add(new Student(name, email, room));
+		}
+	}
+		
+		Collections.sort(students, Comparator.comparingInt(e -> e.room));
+		
 		System.out.println("Ocupações atuais:");
-		for (int i = 0; i < 10; i++) {
-			if (busyRooms[i]) {
-				System.out.println("Quarto " + i + ": " + names[i] + ", " + emails[i]);
-			}
+		for (Student e : students) {
+			System.out.println(e);
 		}
 		
 		scanner.close();
